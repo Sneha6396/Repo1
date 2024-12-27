@@ -1,0 +1,19 @@
+name: Trigger Repo B CI
+
+on:
+  push:
+    branches:
+      - main  # You can change this to any branch you want to trigger on
+
+jobs:
+  trigger_repo_b:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Trigger Repo B workflow
+      uses: peter-evans/repository-dispatch@v2
+      with:
+        repository: <Sneha6396>/Repo2  # Replace with the target repo (Repo B)
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # GitHub token to authenticate the request
+        event-type: run-tests  # This is the custom event name, it can be anything
+
