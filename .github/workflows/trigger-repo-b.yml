@@ -12,7 +12,7 @@ jobs:
     steps:
     - name: Trigger Repo B workflow
       uses: peter-evans/repository-dispatch@v2
-      with:
+      with:  
         repository: Sneha6396/Repo2  
         token: ${{ secrets.SECRET_TOKEN }}  
         event-type: run-tests  
