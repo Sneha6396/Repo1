@@ -15,5 +15,5 @@ jobs:
       with:  
         repository: Sneha6396/Repo2  
         token: ${{ secrets.SECRET_TOKEN }}  
-        event-type: tests
+        event-type: run-tests
 
