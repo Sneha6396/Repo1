@@ -5,7 +5,7 @@ on:
     branches:
       - main  
 
-jobs:
+jobs:  
   trigger_repo_b:
     runs-on: ubuntu-latest
 
@@ -15,5 +15,5 @@ jobs:
       with:  
         repository: Sneha6396/Repo2  
         token: ${{ secrets.SECRET_TOKEN }}  
-        event-type: run-tests
+        event-type: run-tests 
 
