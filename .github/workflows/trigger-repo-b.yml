@@ -4,14 +4,14 @@ on:
   push:
     branches:
       - main  
- 
+  
 jobs:  
   trigger_repo_b:
     runs-on: ubuntu-latest
 
     steps:
     - name: Trigger Repo2 workflow
-      uses: peter-evans/repository-dispatch@v2
+      uses: peter-evans/repository-dispatch@v2 
       with:  
         repository: Sneha6396/Repo2  
         token: ${{ secrets.SECRET_TOKEN }}  
