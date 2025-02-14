@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #chat {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid black;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 5px;
+        }
+        button {
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Real-Time Chat</h2>
+    <div id="chat"></div>
+    <input type="text" id="message" placeholder="Type a message...">
+    <button onclick="sendMessage()">Send</button>
+
+    <script> 
+        // Create a WebSocket connection to the server
+        const socket = new WebSocket('ws://localhost:3000');
+
+        // When the WebSocket connection is established
+        socket.onopen = () => {
+            console.log('Connected to the server');
+        };
+
+        // When a message is received from the server
+        socket.onmessage = (event) => {
+            const chat = document.getElementById('chat');
+            const message = event.data;
+
+            // Check if the received data is a Blob (binary data)
+            if (message instanceof Blob) {
+                // Convert Blob to text
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const p = document.createElement('p');
+                    p.textContent = reader.result; // Display the converted text
+                    chat.appendChild(p);
+                };
+                reader.readAsText(message); // Read the Blob as text
+            } else {
+                // If it's a text message, just append it directly
+                const p = document.createElement('p');
+                p.textContent = message;
+                chat.appendChild(p);
+            }
+
+            // Scroll to the bottom of the chat
+            chat.scrollTop = chat.scrollHeight;
+        };
+
+        // Function to send a message to the server
+        function sendMessage() {
+            const messageInput = document.getElementById('message');
+            const message = messageInput.value;
+
+            // Send the message to the server through the WebSocket
+            socket.send(message);
+
+            // Clear the input field
+            messageInput.value = '';
+        }
+    </script>
+</body>
+</html>
